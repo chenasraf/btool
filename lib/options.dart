@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart' as path;
 
@@ -25,32 +26,34 @@ class BToolOptions {
   final BToolOptionKey key;
   final Iterable<String> args;
   final String? value;
+  final Directory? workingDir;
 
-  BToolOptions({
+  static ArgParser? _parser;
+
+  ArgResults parseResult;
+
+  BToolOptions._({
     required this.key,
     required this.action,
+    required this.parseResult,
     this.args = const [],
     this.value,
+    this.workingDir,
   });
 
-  factory BToolOptions.fromArgs(Iterable<String> args, {String? binVersion}) {
+  factory BToolOptions.fromArgs(
+    Iterable<String> args, {
+    FileSystem? fs,
+  }) {
+    final _fs = fs ?? const LocalFileSystem();
     BToolOptionKey _key;
     BToolAction _action;
     Iterable<String>? _args;
     String? _value;
-    final parser = ArgParser(allowTrailingOptions: true);
-    parser.addFlag('help', abbr: 'h', negatable: false, help: 'Show help');
-    parser.addFlag('version', abbr: 'v', negatable: false, help: 'Show version');
-    parser.addFlag('verbose', abbr: 'V', negatable: false, help: 'Verbose output');
+
     final res = parser.parse(args);
-    if (res['help'] == true) {
-      print(parser.usage);
-      exit(0);
-    }
-    if (res['version'] == true) {
-      print('btool version ${binVersion ?? 'local'}');
-      exit(0);
-    }
+
+    // <get/set> <key> [<value?>]
     if (res.rest.length > 1) {
       try {
         _action = BToolAction.values.firstWhere((e) => e.name == res.rest[0]);
@@ -67,10 +70,29 @@ class BToolOptions {
         _value = _args.elementAt(0);
       }
     } else {
-      print(parser.usage);
-      exit(1);
+      throw BToolOptionsException('Bad arguments');
     }
 
-    return BToolOptions(key: _key, action: _action, args: _args, value: _value);
+    return BToolOptions._(
+      key: _key,
+      action: _action,
+      args: _args,
+      value: _value,
+      workingDir: _fs.directory(res['working-dir']),
+      parseResult: res,
+    );
+  }
+
+  static ArgParser get parser {
+    if (BToolOptions._parser != null) {
+      return BToolOptions._parser!;
+    }
+
+    final _parser = ArgParser(allowTrailingOptions: true);
+    _parser.addFlag('help', abbr: 'h', negatable: false, help: 'Show help');
+    _parser.addFlag('version', abbr: 'v', negatable: false, help: 'Show version');
+    _parser.addOption('working-dir', abbr: 'd', help: 'Change working directory of script');
+    BToolOptions._parser = _parser;
+    return _parser;
   }
 }

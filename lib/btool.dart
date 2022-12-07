@@ -44,39 +44,57 @@ void btoolRunner(
   String? binVersion,
 }) {
   try {
-    final options = BToolOptions.fromArgs(args, binVersion: binVersion);
+    final options = BToolOptions.fromArgs(args, fs: fs);
+
+    if (options.parseResult['help'] == true) {
+      print(BToolOptions.parser.usage);
+      exit(0);
+    }
+
+    if (options.parseResult['version'] == true) {
+      print('btool version ${binVersion ?? 'local'}');
+      exit(0);
+    }
+
     final action = getAction(options, fs: fs ?? const LocalFileSystem());
     action.run();
-    //
   } catch (e) {
+    if (e is BToolOptionsException) {
+      print(BToolOptions.parser.usage);
+      exit(1);
+    }
+    if (e is BToolException) {
+      print(e.message);
+      exit(1);
+    }
     print(e);
     exit(1);
   }
-  // '{{VERSION}}'
 }
 
 GetSetAction getAction(BToolOptions options, {required FileSystem fs}) {
   late String Function() getter;
   late void Function(String value) setter;
+
   switch (options.key) {
     case BToolOptionKey.minSdkVersion:
-      getter = () => getMinSdkVersion(fs: fs);
+      getter = () => getMinSdkVersion(fs: fs, workingDir: options.workingDir);
       setter = (value) => setMinSdkVersion(value, fs: fs);
       break;
     case BToolOptionKey.targetSdkVersion:
-      getter = () => getTargetSdkVersion(fs: fs);
+      getter = () => getTargetSdkVersion(fs: fs, workingDir: options.workingDir);
       setter = (value) => setTargetSdkVersion(value, fs: fs);
       break;
     case BToolOptionKey.applicationId:
-      getter = () => getApplicationId(fs: fs);
+      getter = () => getApplicationId(fs: fs, workingDir: options.workingDir);
       setter = (value) => setApplicationId(value, fs: fs);
       break;
     case BToolOptionKey.packageName:
-      getter = () => getPackageName(fs: fs);
+      getter = () => getPackageName(fs: fs, workingDir: options.workingDir);
       setter = (value) => setPackageName(value, fs: fs);
       break;
     case BToolOptionKey.packageVersion:
-      getter = () => getPackageVersion(fs: fs);
+      getter = () => getPackageVersion(fs: fs, workingDir: options.workingDir);
       setter = (value) => setPackageVersion(value, fs: fs);
       break;
     default:

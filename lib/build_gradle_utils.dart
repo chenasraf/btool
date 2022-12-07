@@ -4,10 +4,13 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart' as path;
 
-String getBuildGradleKey(String key, {FileSystem? fs}) {
+import 'utils.dart';
+
+String getBuildGradleKey(String key, {FileSystem? fs, Directory? workingDir}) {
   final _fs = fs ?? const LocalFileSystem();
+  final wd = getCurrentDir(workingDir, fs: _fs).path;
   final buildFile = _fs.file(
-    path.join(_fs.currentDirectory.path, 'android', 'app', 'build.gradle'),
+    path.join(wd, 'android', 'app', 'build.gradle'),
   );
   final value = buildFile
       .readAsStringSync()
@@ -19,10 +22,11 @@ String getBuildGradleKey(String key, {FileSystem? fs}) {
   return value;
 }
 
-void setBuildGradleKey(String key, String value, {FileSystem? fs}) {
+void setBuildGradleKey(String key, String value, {FileSystem? fs, Directory? workingDir}) {
   final _fs = fs ?? const LocalFileSystem();
+  final wd = getCurrentDir(workingDir, fs: _fs).path;
   final buildFile = _fs.file(
-    path.join(_fs.currentDirectory.path, 'android', 'app', 'build.gradle'),
+    path.join(wd, 'android', 'app', 'build.gradle'),
   );
   final lines = buildFile.readAsStringSync().split('\n');
   final index = lines.indexWhere((x) => x.trim().startsWith(key));
@@ -32,13 +36,39 @@ void setBuildGradleKey(String key, String value, {FileSystem? fs}) {
   buildFile.writeAsStringSync(lines.join('\n'));
 }
 
-String getMinSdkVersion({FileSystem? fs}) => getBuildGradleKey('minSdkVersion', fs: fs);
-void setMinSdkVersion(String value, {FileSystem? fs}) =>
-    setBuildGradleKey('minSdkVersion', value, fs: fs);
-String getTargetSdkVersion({FileSystem? fs}) => getBuildGradleKey('targetSdkVersion', fs: fs);
-void setTargetSdkVersion(String value, {FileSystem? fs}) =>
-    setBuildGradleKey('targetSdkVersion', value, fs: fs);
-String getApplicationId({FileSystem? fs}) =>
-    getBuildGradleKey('applicationId', fs: fs).replaceAll('"', '');
-void setApplicationId(String value, {FileSystem? fs}) =>
-    setBuildGradleKey('applicationId', '"$value"', fs: fs);
+String getMinSdkVersion({FileSystem? fs, Directory? workingDir}) => getBuildGradleKey(
+      'minSdkVersion',
+      fs: fs,
+      workingDir: workingDir,
+    );
+void setMinSdkVersion(String value, {FileSystem? fs, Directory? workingDir}) => setBuildGradleKey(
+      'minSdkVersion',
+      value,
+      fs: fs,
+      workingDir: workingDir,
+    );
+
+String getTargetSdkVersion({FileSystem? fs, Directory? workingDir}) => getBuildGradleKey(
+      'targetSdkVersion',
+      fs: fs,
+      workingDir: workingDir,
+    );
+void setTargetSdkVersion(String value, {FileSystem? fs, Directory? workingDir}) =>
+    setBuildGradleKey(
+      'targetSdkVersion',
+      value,
+      fs: fs,
+      workingDir: workingDir,
+    );
+
+String getApplicationId({FileSystem? fs, Directory? workingDir}) => getBuildGradleKey(
+      'applicationId',
+      fs: fs,
+      workingDir: workingDir,
+    ).replaceAll('"', '');
+void setApplicationId(String value, {FileSystem? fs, Directory? workingDir}) => setBuildGradleKey(
+      'applicationId',
+      '"$value"',
+      fs: fs,
+      workingDir: workingDir,
+    );
