@@ -8,14 +8,14 @@ class BinBuilder implements Builder {
   FutureOr<void> build(BuildStep buildStep) async {
     final contents = await buildStep.readAsString(buildStep.inputId);
     return buildStep.writeAsString(
-      buildStep.inputId.changeExtension('.bin.dart'),
+      AssetId(buildStep.inputId.package, buildStep.inputId.path.replaceFirst('.bin.dart', '.dart')),
       contents.replaceAll('{{VERSION}}', getPackageVersion()),
     );
   }
 
   @override
   Map<String, List<String>> get buildExtensions => const {
-        '.dart': ['.bin.dart'],
+        '.bin.dart': ['.dart'],
       };
 }
 

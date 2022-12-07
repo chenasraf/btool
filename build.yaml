@@ -2,11 +2,11 @@ builders:
   btool|bin_builder:
     import: 'package:btool/bin_builder.dart'
     builder_factories: ['binBuilder']
-    build_extensions: { '.dart': ['.bin.dart'] }
+    build_extensions: { '.bin.dart': ['.dart'] }
     build_to: source
 targets:
   $default:
     builders:
       btool|bin_builder:
         generate_for:
-          - bin/main.dart
+          - bin/btool.bin.dart
