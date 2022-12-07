@@ -8,7 +8,8 @@ class BinBuilder implements Builder {
   FutureOr<void> build(BuildStep buildStep) async {
     final contents = await buildStep.readAsString(buildStep.inputId);
     return buildStep.writeAsString(
-      AssetId(buildStep.inputId.package, buildStep.inputId.path.replaceFirst('.bin.dart', '.dart')),
+      AssetId(buildStep.inputId.package,
+          buildStep.inputId.path.replaceFirst('.bin.dart', '.dart')),
       contents.replaceAll('{{VERSION}}', getPackageVersion()),
     );
   }

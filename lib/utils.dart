@@ -1,6 +1,5 @@
 import 'package:file/file.dart';
 
-
 class _BToolBaseException implements Exception {
   final String message;
   _BToolBaseException(this.message);

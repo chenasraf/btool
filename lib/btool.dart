@@ -91,7 +91,8 @@ GetSetAction getAction(BToolOptions options, {required FileSystem fs}) {
       setter = (value) => setMinSdkVersion(value, fs: fs);
       break;
     case BToolOptionKey.targetSdkVersion:
-      getter = () => getTargetSdkVersion(fs: fs, workingDir: options.workingDir);
+      getter =
+          () => getTargetSdkVersion(fs: fs, workingDir: options.workingDir);
       setter = (value) => setTargetSdkVersion(value, fs: fs);
       break;
     case BToolOptionKey.applicationId:

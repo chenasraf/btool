@@ -31,16 +31,20 @@ class Logger {
     write(colorize(message.toString(), fg: fg));
   }
 
-  void info(Object message) => writeLevel(LogLevel.info, message, fg: Styles.DEFAULT);
+  void info(Object message) =>
+      writeLevel(LogLevel.info, message, fg: Styles.DEFAULT);
   void i(Object message) => info(message);
 
-  void warn(Object message) => writeLevel(LogLevel.warn, message, fg: Styles.YELLOW);
+  void warn(Object message) =>
+      writeLevel(LogLevel.warn, message, fg: Styles.YELLOW);
   void w(Object message) => warn(message);
 
-  void error(Object message) => writeLevel(LogLevel.error, message, fg: Styles.RED);
+  void error(Object message) =>
+      writeLevel(LogLevel.error, message, fg: Styles.RED);
   void e(Object message) => error(message);
 
-  void debug(Object message) => writeLevel(LogLevel.debug, message, fg: Styles.LIGHT_BLUE);
+  void debug(Object message) =>
+      writeLevel(LogLevel.debug, message, fg: Styles.LIGHT_BLUE);
   void d(Object message) => debug(message);
 }
 

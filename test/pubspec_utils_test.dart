@@ -9,7 +9,9 @@ void main() {
     late FileSystem fs;
     setUp(() {
       fs = MemoryFileSystem();
-      fs.file(path.join(fs.currentDirectory.path, 'pubspec.yaml')).writeAsStringSync(
+      fs
+          .file(path.join(fs.currentDirectory.path, 'pubspec.yaml'))
+          .writeAsStringSync(
             [
               'name: test_app',
               'version: 1.0.0+1',

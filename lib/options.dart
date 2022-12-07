@@ -72,7 +72,9 @@ class BToolOptions {
         key: BToolOptionKey.applicationId,
         action: BToolAction.get,
         parseResult: res,
-        workingDir: res['working-dir'] != null ? _fs.directory(res['working-dir']) : null,
+        workingDir: res['working-dir'] != null
+            ? _fs.directory(res['working-dir'])
+            : null,
       );
     }
 
@@ -81,7 +83,8 @@ class BToolOptions {
       action: _action,
       args: _args,
       value: _value,
-      workingDir: res['working-dir'] != null ? _fs.directory(res['working-dir']) : null,
+      workingDir:
+          res['working-dir'] != null ? _fs.directory(res['working-dir']) : null,
       parseResult: res,
     );
   }
@@ -93,9 +96,12 @@ class BToolOptions {
 
     final _parser = ArgParser(allowTrailingOptions: true);
     _parser.addFlag('help', abbr: 'h', negatable: false, help: 'Show help');
-    _parser.addFlag('version', abbr: 'v', negatable: false, help: 'Show version');
-    _parser.addOption('working-dir', abbr: 'd', help: 'Change working directory of script');
-    _parser.addFlag('verbose', abbr: 'V', negatable: false, help: 'Display debug output');
+    _parser.addFlag('version',
+        abbr: 'v', negatable: false, help: 'Show version');
+    _parser.addOption('working-dir',
+        abbr: 'd', help: 'Change working directory of script');
+    _parser.addFlag('verbose',
+        abbr: 'V', negatable: false, help: 'Display debug output');
     BToolOptions._parser = _parser;
     return _parser;
   }
