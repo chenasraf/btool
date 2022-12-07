@@ -1,6 +1,7 @@
 ## 0.1.1
 
-- doc & build updates
+- build: fix bin link
+- docs: update
 
 ## 0.1.0
 
