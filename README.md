@@ -5,56 +5,65 @@ A build helper for Dart/Flutter projects.
 Contains utility for getting/setting various configs such as package version/name, min/target sdk
 version, etc. through a command-line or Dart import which you can utilize for your build steps.
 
+---
+
+<details markdown="1">
+<summary>Table of Contents</summary>
+
+- [btool](#btool)
+  - [Getting started](#getting-started)
+  - [Usage](#usage)
+    - [Dart](#dart)
+    - [Command line](#command-line)
+      - [Commands](#commands)
+      - [Available keys](#available-keys)
+      - [Optional flags](#optional-flags)
+  - [Contributing](#contributing)
+
+</details>
+
+---
+
 ## Getting started
 
-### Install globally
+See [Installing](https://pub.dev/packages/btool/install)
 
-```shell
-dart pub global activate btools
-# or
-flutter pub global activate btools
-```
+You can install globally, or locally as a dependency.
 
-And then to use:
-
-```shell
-btools -h
-```
-
-### Install locally
-
-```shell
-dart pub add [--dev] btools
-# or
-flutter pub add [--dev] btools
-```
-
-And then to use:
-
-```shell
-dart run btools -h
-```
+To see usage help, see below or use `dart run btool -h`.
 
 ## Usage
 
+### Dart
+
+See [API Reference](https://pub.dev/documentation/btool/latest/)
+
+### Command line
+
 ```txt
 Usage: btool <command> [...args]
+```
 
-Commands:
+#### Commands
 
-get <key>            Get config value
-set <key> <value>    Set config value
+| Command | Parameters      | Description      |
+| ------- | --------------- | ---------------- |
+| `get`   | `<key>`         | Get config value |
+| `set`   | `<key> <value>` | Set config value |
 
-Available keys:
+#### Available keys
 
-- minSdkVersion
-- targetSdkVersion
-- packageVersion
-- packageName
-- applicationId
+| Key              | Source                     |
+| ---------------- | -------------------------- |
+| applicationId    | `android/app/build.gradle` |
+| minSdkVersion    | `android/app/build.gradle` |
+| targetSdkVersion | `android/app/build.gradle` |
+| packageVersion   | `pubspec.yaml`             |
+| packageName      | `pubspec.yaml`             |
 
-Optional flags:
+#### Optional flags
 
+```txt
 -h, --help           Show help
 -v, --version        Show version
 -d, --working-dir    Change working directory of script
@@ -84,3 +93,7 @@ If you are a developer and want to contribute code, here are some starting tips:
 4. Create tests for your changes
 5. Update the relevant documentation (readme, code comments)
 6. Create a PR on upstream
+
+```
+
+```
