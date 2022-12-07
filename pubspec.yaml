@@ -1,10 +1,10 @@
 name: btool
 description: Generic build helper tools for flutter
-version: 0.0.1
-homepage: 'https://github.com/chenastag/btool'
+version: 0.1.0
+homepage: 'https://github.com/chenasraf/btool'
 
 executables:
-  btool: main.bin
+  btool: btool
 
 environment:
   sdk: '>=2.19.0-255.2.beta <3.0.0'
@@ -26,3 +26,4 @@ script_runner:
     - activate-local: 'dart pub global activate --source path ./'
     - activate-global: 'dart pub global activate btool'
     - auto-fix: dart fix --apply
+    - publis: dart pub publish -f

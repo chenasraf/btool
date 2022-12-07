@@ -101,7 +101,7 @@ class BToolOptions {
   }
 
   static String get usage {
-    const pad = 23;
+    const pad = 21;
     return [
       'Usage: btool <command> [...args]',
       '',
@@ -111,6 +111,7 @@ class BToolOptions {
       '${'set <key> <value>'.padRight(pad)}Set config value',
       '',
       'Available keys:',
+      '',
       BToolOptionKey.values.map((x) => '- ${x.name}').join('\n'),
       '',
       'Optional flags:',
