@@ -26,4 +26,5 @@ script_runner:
     - activate-local: 'dart pub global activate --source path ./'
     - activate-global: 'dart pub global activate btool'
     - auto-fix: dart fix --apply
-    - publis: dart pub publish -f
+    - publish: dart pub publish -f
+    - watch: dart run build_runner watch --delete-conflicting-outputs

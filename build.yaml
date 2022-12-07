@@ -1,9 +1,10 @@
 builders:
-  btool|bin_builder:
-    import: 'package:btool/bin_builder.dart'
+  bin_builder:
+    import: 'tools/bin_builder.dart'
     builder_factories: ['binBuilder']
     build_extensions: { '.bin.dart': ['.dart'] }
     build_to: source
+
 targets:
   $default:
     builders:
