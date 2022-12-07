@@ -1,6 +1,6 @@
 builders:
   bin_builder:
-    import: 'tools/bin_builder.dart'
+    import: 'tool/bin_builder.dart'
     builder_factories: ['binBuilder']
     build_extensions: { '.bin.dart': ['.dart'] }
     build_to: source
