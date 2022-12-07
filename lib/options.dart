@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:path/path.dart' as path;
 
-import 'pubspec_utils.dart';
 import 'utils.dart';
 
 enum BToolAction {
@@ -69,8 +65,15 @@ class BToolOptions {
       if (_args.isNotEmpty) {
         _value = _args.elementAt(0);
       }
-    } else {
+    } else if (res['version'] != true && res['help'] != true) {
       throw BToolOptionsException('Bad arguments');
+    } else {
+      return BToolOptions._(
+        key: BToolOptionKey.applicationId,
+        action: BToolAction.get,
+        parseResult: res,
+        workingDir: res['working-dir'] != null ? _fs.directory(res['working-dir']) : null,
+      );
     }
 
     return BToolOptions._(
@@ -78,7 +81,7 @@ class BToolOptions {
       action: _action,
       args: _args,
       value: _value,
-      workingDir: _fs.directory(res['working-dir']),
+      workingDir: res['working-dir'] != null ? _fs.directory(res['working-dir']) : null,
       parseResult: res,
     );
   }
@@ -92,7 +95,27 @@ class BToolOptions {
     _parser.addFlag('help', abbr: 'h', negatable: false, help: 'Show help');
     _parser.addFlag('version', abbr: 'v', negatable: false, help: 'Show version');
     _parser.addOption('working-dir', abbr: 'd', help: 'Change working directory of script');
+    _parser.addFlag('verbose', abbr: 'V', negatable: false, help: 'Display debug output');
     BToolOptions._parser = _parser;
     return _parser;
+  }
+
+  static String get usage {
+    const pad = 23;
+    return [
+      'Usage: btool <command> [...args]',
+      '',
+      'Commands:',
+      '',
+      '${'get <key>'.padRight(pad)}Get config value',
+      '${'set <key> <value>'.padRight(pad)}Set config value',
+      '',
+      'Available keys:',
+      BToolOptionKey.values.map((x) => '- ${x.name}').join('\n'),
+      '',
+      'Optional flags:',
+      '',
+      BToolOptions.parser.usage,
+    ].join('\n');
   }
 }

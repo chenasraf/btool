@@ -1,8 +1,5 @@
 import 'package:file/file.dart';
-import 'package:file/local.dart';
-import 'package:path/path.dart' as path;
 
-import 'options.dart';
 
 class _BToolBaseException implements Exception {
   final String message;

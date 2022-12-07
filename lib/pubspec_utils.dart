@@ -4,12 +4,14 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart' as path;
 
+import 'logger.dart';
 import 'utils.dart';
 
 String getPubspecKey(String key, {FileSystem? fs, Directory? workingDir}) {
   final _fs = fs ?? const LocalFileSystem();
   final wd = getCurrentDir(workingDir, fs: _fs).path;
   final pubspecFile = _fs.file(path.join(wd, 'pubspec.yaml'));
+  logger.debug('Getting $key from ${pubspecFile.path}');
   final value = pubspecFile
       .readAsStringSync()
       .split('\n')
@@ -27,6 +29,7 @@ void setPubspecKey(String key, String value, {FileSystem? fs, Directory? working
   final lines = pubspecFile.readAsStringSync().split('\n');
   final index = lines.indexWhere((x) => x.startsWith('$key:'));
   lines[index] = '$key: $value';
+  logger.debug('Setting $key: $value from ${pubspecFile.path}');
   pubspecFile.writeAsStringSync(lines.join('\n'));
 }
 

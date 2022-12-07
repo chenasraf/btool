@@ -7,7 +7,11 @@
     {
       "name": "btool",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": [
+        "get",
+        "packageVersion"
+      ]
     },
     {
       "name": "Debug BinBuilder",

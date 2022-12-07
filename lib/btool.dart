@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 
+import 'logger.dart';
 import 'options.dart';
 import 'build_gradle_utils.dart';
 import 'pubspec_utils.dart';
@@ -26,7 +27,7 @@ class GetSetAction {
   void run() {
     switch (action) {
       case BToolAction.get:
-        print(getter());
+        logger.info(getter());
         break;
       case BToolAction.set:
         if (value == null) {
@@ -46,13 +47,17 @@ void btoolRunner(
   try {
     final options = BToolOptions.fromArgs(args, fs: fs);
 
+    if (options.parseResult['verbose'] == true) {
+      logger.level = LogLevel.debug;
+    }
+
     if (options.parseResult['help'] == true) {
-      print(BToolOptions.parser.usage);
+      logger.info(BToolOptions.usage);
       exit(0);
     }
 
     if (options.parseResult['version'] == true) {
-      print('btool version ${binVersion ?? 'local'}');
+      logger.info('btool version ${binVersion ?? 'local'}');
       exit(0);
     }
 
@@ -60,14 +65,18 @@ void btoolRunner(
     action.run();
   } catch (e) {
     if (e is BToolOptionsException) {
-      print(BToolOptions.parser.usage);
+      logger.error(BToolOptions.usage);
       exit(1);
     }
     if (e is BToolException) {
-      print(e.message);
+      logger.error(e.message);
       exit(1);
     }
-    print(e);
+    if (e is FileSystemException && e.osError != null) {
+      logger.error('${e.osError!.message}: ${e.path}');
+      exit(1);
+    }
+    logger.error(e);
     exit(1);
   }
 }

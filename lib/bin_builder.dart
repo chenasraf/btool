@@ -19,8 +19,4 @@ class BinBuilder implements Builder {
       };
 }
 
-Builder binBuilder(BuilderOptions options) {
-  print("OPTIONS");
-  print(options);
-  return BinBuilder();
-}
+Builder binBuilder(BuilderOptions options) => BinBuilder();

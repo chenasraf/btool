@@ -4,6 +4,7 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart' as path;
 
+import 'logger.dart';
 import 'utils.dart';
 
 String getBuildGradleKey(String key, {FileSystem? fs, Directory? workingDir}) {
@@ -12,6 +13,8 @@ String getBuildGradleKey(String key, {FileSystem? fs, Directory? workingDir}) {
   final buildFile = _fs.file(
     path.join(wd, 'android', 'app', 'build.gradle'),
   );
+  logger.debug('Getting $key from ${buildFile.path}');
+
   final value = buildFile
       .readAsStringSync()
       .split('\n')
@@ -33,6 +36,7 @@ void setBuildGradleKey(String key, String value, {FileSystem? fs, Directory? wor
   final line = lines[index];
   final oldValue = line.split(' ').last;
   lines[index] = lines[index].replaceAll(oldValue, value);
+  logger.debug('Setting $key: $value from ${buildFile.path}');
   buildFile.writeAsStringSync(lines.join('\n'));
 }
 
