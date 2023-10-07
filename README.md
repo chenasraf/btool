@@ -70,6 +70,20 @@ Usage: btool <command> [...args]
 -V, --verbose        Display debug output
 ```
 
+#### Example
+
+Here is an example for a simple script that pushes the apk to the device Download folder.
+
+```sh
+#!/usr/bin/env sh
+name=$(dart run btool get packageName)
+version=$(dart run btool get packageVersion)
+source="$(pwd)/build/app/outputs/flutter-apk/app-release.apk"
+target="/sdcard/Download/$name-$version.apk"
+echo "adb push $source $target"
+adb push $source $target
+```
+
 ## Contributing
 
 I am developing this package on my free time, so any support, whether code, issues, or just stars is

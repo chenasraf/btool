@@ -1,3 +1,7 @@
+## 0.1.4
+
+- upgrade dependencies
+
 ## 0.1.3
 
 - fix: don't color default log lines
