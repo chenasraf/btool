@@ -28,6 +28,10 @@ class Logger {
     if (logLevelNum[level]! > logLevelNum[this.level]!) {
       return;
     }
+    if (fg == Styles.DEFAULT) {
+      write(message);
+      return;
+    }
     write(colorize(message.toString(), fg: fg));
   }
 

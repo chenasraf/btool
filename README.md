@@ -93,7 +93,3 @@ If you are a developer and want to contribute code, here are some starting tips:
 4. Create tests for your changes
 5. Update the relevant documentation (readme, code comments)
 6. Create a PR on upstream
-
-```
-
-```

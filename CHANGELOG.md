@@ -1,3 +1,7 @@
+## 0.1.3
+
+- fix: don't color default log lines
+
 ## 0.1.2
 
 - fix: binary link
