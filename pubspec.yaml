@@ -1,6 +1,6 @@
 name: btool
 description: Generic build helper tools for Flutter/Dart such as manipulating version, package name or application ID
-version: 0.1.4
+version: 0.1.5
 homepage: 'https://github.com/chenasraf/btool'
 
 executables:
@@ -26,6 +26,6 @@ script_runner:
     - activate-local: 'dart pub global activate --source path ./'
     - activate-global: 'dart pub global activate btool'
     - auto-fix: dart fix --apply
-    - publish: dart pub publish -f
+    - publish: dart format .; dart pub publish; format
     - watch: dart run build_runner watch --delete-conflicting-outputs
-    - format: dart format .
+    - format: dart format --line-length 120 .

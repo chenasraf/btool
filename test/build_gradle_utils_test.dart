@@ -9,8 +9,7 @@ void main() {
     late FileSystem fs;
     setUp(() {
       fs = MemoryFileSystem();
-      var dir =
-          path.join(fs.currentDirectory.path, 'android', 'app', 'build.gradle');
+      var dir = path.join(fs.currentDirectory.path, 'android', 'app', 'build.gradle');
       fs.directory(path.dirname(dir)).createSync(recursive: true);
       fs
           .file(
