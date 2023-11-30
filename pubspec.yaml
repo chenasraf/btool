@@ -1,6 +1,6 @@
 name: btool
 description: Generic build helper tools for Flutter/Dart such as manipulating version, package name or application ID
-version: 0.1.5
+version: 0.1.4
 homepage: 'https://github.com/chenasraf/btool'
 
 executables:
